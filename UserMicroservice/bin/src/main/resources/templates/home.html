@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"></html>
+
+<head>
+    <title>Home</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet"> 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container-fluid">
+    
+        <div class="row">
+            <div class="col-md-10">
+                <div class="card bg-dark text-white">
+                    <div class="card-body">Daftar User
+                        <button type="submit" class="btn btn-sm btn-primary"> Tambah User</button>
+                    </div>  
+                </div>
+
+          <!--  <div class="table">
+                    <table class="table table-hover" id="myTable">
+                        <thead>
+                            <th>Nama</th>
+                            <th>Email</th>
+                            <th>Nomor HP</th>
+                            <th>Status</th>
+                            <th>Last Update</th>
+                        </thead>
+                        <tbody>
+                         <tr th:each  = "borrower, iterationStatus : *{listBorrower}">
+                            <td>Test dulu</td>
+                            <td th:text="${borrower.email}"></td>
+                            <td th:text="${borrower.mobilePhoneNumber}"></td>
+                            <td th:text="${borrower.disabled}"></td>
+                            <td th:text="${borrower.updatedTime}"></td>
+                         </tr>
+                     </tbody>
+                    </table>
+                </div> -->  
+                <table class="table table-striped table-bordered">
+			        <thead>
+			        <tr>
+			            <th>First Name</th>
+			            <th>Last Name</th>
+			            <th>Role</th>
+			            <th>Actions</th>
+			        </tr>
+			        </thead>
+			        <tbody>
+			        <tr v-for="user in users">
+			            <td>{{ user.firstName }}</td>
+			            <td>{{ user.lastName }}</td>
+			            <td>{{ user.role.name }}</td>
+			            <td>
+			                <button class="btn btn-primary" v-on:click="editUser(user)">Edit</button>
+			                <button class="btn btn-danger" v-on:click="deleteUser(user)">Delete</button>
+			            </td>
+			        </tr>
+			        </tbody>
+			    </table>
+            </div>
+        </div>
+
+        <div class="row">
+            <div id="contents">
+                <!-- Since we create a Vue component pointing to id=contents,
+                     Vue will generate a unordered list of items such
+                     as this inside this div.
+                     v-for will cause a loop to run over all players
+                     as per the players array found in app.data
+                <ul>
+                    <li></li>
+                    <li></li>
+                </ul>
+                -->
+                <ul>
+                    <li style="list-style-type:none" v-for="player in players">
+                        <player-card
+                                v-bind:player="player" v-bind:key="player.id">
+                        </player-card>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.21.1/babel.min.js">
+    </script>
+
+<script type="text/babel">
+    // player-card is now a Vue component that generates a 'card' showing a player
+    // It can be used
+    // declaratively like <player-card v-bind:player="someplayer">
+    Vue.component('player-card', {
+        props: ['player'],
+        template: `<div class="card">
+                    <div class="card-body">
+                        <h6 class="card-title">
+                            {{ player.name }}
+                        </h6>
+                        <p class="card-text">
+                            <div>
+                            {{ player.description }}
+                            </div>
+                        </p>
+                    </div>
+                </div>`
+    });
+
+    var app = new Vue({
+        el: '#contents',
+        data: {
+            players: [
+                {id: "1", name: "Lionel Messi", description: "Argentina's superstar"},
+                {id: "2", name: "Christiano Ronaldo", description: "Portugal top-ranked player"}
+            ]
+        }
+    });
+</script>
+</body>
+</html>
+

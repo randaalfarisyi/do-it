@@ -1,0 +1,51 @@
+package com.doit.user.restcontroller;
+
+import java.util.List;
+
+import com.doit.user.model.BorrowerModel;
+import com.doit.user.service.BorrowerService;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+@CrossOrigin("*")
+@RestController
+public class BorrowerRestController {
+    @Autowired
+    @Qualifier("borrowerServiceImpl")
+    private BorrowerService borrowerService;
+    
+// 	@RequestMapping(value = "/view/{uuid}")
+//    public BorrowerModel home(@PathVariable("uuid") String uuid) {
+//        List<BorrowerModel> listBorrower = borrowerService.getBorrrowerList();
+//        BorrowerModel daftarPeminjam = borrowerService.getBorrowerByUuid(uuid).get();
+//        return daftarPeminjam;
+//    }
+
+    // @RequestMapping(value = "/", method = RequestMethod.GET)
+    // public List<BorrowerModel> home(Model model) {
+    //     List<BorrowerModel> listBorrower = borrowerService.getBorrrowerList();
+    //     return listBorrower;
+    // }
+
+    @GetMapping("/user")
+    public List<BorrowerModel> getAllBorrower(){
+        List<BorrowerModel> listBorrower = borrowerService.getBorrrowerList();
+        return listBorrower;
+    }
+    
+    @GetMapping("/user/{id}")
+    public BorrowerModel getBorrower(@PathVariable String uuid){
+        BorrowerModel peminjam = borrowerService.getBorrowerByUuid(uuid).get();
+        return peminjam;
+    }
+
+
+}
